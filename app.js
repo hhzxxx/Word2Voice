@@ -38,36 +38,40 @@ app.get("/yuyin/get", (req, res) => {
   if (!lock) {
     lock = true;
     if (req.body.text || req.query.text) {
-      let data = req.body.text?req.body:req.query
-      console.log(data)
-      yuyin
-        .getYuyin(
-          data.text,
-          data.voice ? data.voice : "Aixia",
-          data.volume ? data.volume : 50,
-          data.speech_rate ? data.speech_rate : 0
-        )
-        .then(
-          (url) => {
-            request
-              .get({
-                url: `https://www.zaixianai.cn${url}`,
-                gzip: true,
-                headers: {
-                  usertoken: "lolixxx",
-                  referer: "https://www.zaixianai.cn/voiceCompose",
-                },
-              })
-              .on("response", function (response) {
-                lock = false;
-                response.pipe(res);
-              });
-          },
-          (rej) => {
-            lock = false;
-            res.send(rej);
-          }
-        );
+      let data = req.body.text ? req.body : req.query;
+      if (data.text.length > 200) {
+        res.send("text limit");
+      }
+      {
+        yuyin
+          .getYuyin(
+            data.text,
+            data.voice ? data.voice : "Aixia",
+            data.volume ? data.volume : 50,
+            data.speech_rate ? data.speech_rate : 0
+          )
+          .then(
+            (url) => {
+              request
+                .get({
+                  url: `https://www.zaixianai.cn${url}`,
+                  gzip: true,
+                  headers: {
+                    usertoken: "lolixxx",
+                    referer: "https://www.zaixianai.cn/voiceCompose",
+                  },
+                })
+                .on("response", function (response) {
+                  lock = false;
+                  response.pipe(res);
+                });
+            },
+            (rej) => {
+              lock = false;
+              res.send(rej);
+            }
+          );
+      }
     } else {
       lock = false;
       res.send("no text");

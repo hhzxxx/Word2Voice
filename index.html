@@ -334,6 +334,7 @@
 
 <script>
   let blobUrl = "";
+  let title = "";
 
   //Loading页面
   document.onreadystatechange = function () {
@@ -357,6 +358,7 @@
 
   window.onbeforeunload = function (event) {
     if (blobUrl) {
+      title = "";
       window.URL.revokeObjectURL(blobUrl);
     }
   };
@@ -364,7 +366,7 @@
   document.getElementById("down").onclick = function () {
     if (blobUrl) {
       let a = document.createElement("a");
-      let filename = "yuyin" + ".mp3";
+      let filename = title + ".mp3";
       a.href = blobUrl;
       a.download = filename;
       a.click();
@@ -377,6 +379,7 @@
   document.getElementById("gen").onclick = function () {
     if (blobUrl) {
       console.log(blobUrl);
+      title = "";
       window.URL.revokeObjectURL(blobUrl);
     }
     document.getElementById("loading_bg").style.opacity = 1;
@@ -407,6 +410,7 @@
     ajax.onreadystatechange = function () {
       loadingFade();
       if (ajax.readyState == 4 && ajax.status == 200) {
+        title = text.length > 11 ? text.substr(0, 9) : text;
         blobUrl = window.URL.createObjectURL(ajax.response);
         let audio = document.getElementById("audio");
         audio.src = blobUrl;
@@ -421,7 +425,7 @@
   #loading {
     position: absolute;
     background-color: #fff;
-    :top: 0px;
+    top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
