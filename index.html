@@ -1,3 +1,9 @@
+<div id="loading">
+  <div id="loading_bg">
+    <div class="loader">Loading...</div>
+  </div>
+</div>
+
 <div>
   <form id="tf" action="/yuyin/get" method="get">
     <div>
@@ -329,6 +335,26 @@
 <script>
   let blobUrl = "";
 
+  //Loading页面
+  document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+      loadingFade();
+    }
+  };
+  function loadingFade() {
+    var opacity = 1;
+    var loadingBackground = document.getElementById("loading_bg");
+    var time = setInterval(function () {
+      if (opacity <= 0) {
+        clearInterval(time);
+        //loadingPage.remove();
+        document.getElementById("loading").style.display = "none";
+      }
+      loadingBackground.style.opacity = opacity;
+      opacity -= 0.4;
+    }, 100);
+  }
+
   window.onbeforeunload = function (event) {
     if (blobUrl) {
       window.URL.revokeObjectURL(blobUrl);
@@ -343,8 +369,8 @@
       a.download = filename;
       a.click();
       a.remove();
-    }else{
-        alert("请先生成")
+    } else {
+      alert("请先生成");
     }
   };
 
@@ -353,6 +379,8 @@
       console.log(blobUrl);
       window.URL.revokeObjectURL(blobUrl);
     }
+    document.getElementById("loading_bg").style.opacity = 1;
+    document.getElementById("loading").style.display = "block";
     var text = document.getElementById("text").value.trim();
     var voice = document.getElementById("voice").value.trim();
     var volume = document.getElementById("volume").value.trim();
@@ -377,6 +405,7 @@
     ajax.send();
     //步骤四:注册事件 onreadystatechange 状态改变就会调用
     ajax.onreadystatechange = function () {
+      loadingFade();
       if (ajax.readyState == 4 && ajax.status == 200) {
         blobUrl = window.URL.createObjectURL(ajax.response);
         let audio = document.getElementById("audio");
@@ -385,3 +414,90 @@
     };
   };
 </script>
+
+<style>
+  /*********LoadingPage*************/
+
+  #loading {
+    position: absolute;
+    background-color: #fff;
+    :top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+  }
+  #loading_bg {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .loader {
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-family: helvetica, arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #ce4233;
+    letter-spacing: 0.2em;
+  }
+  .loader::before,
+  .loader::after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: #ce4233;
+    position: absolute;
+    -webkit-animation: load 0.7s infinite alternate ease-in-out;
+    animation: load 0.7s infinite alternate ease-in-out;
+  }
+  .loader::before {
+    top: 0;
+  }
+  .loader::after {
+    bottom: 0;
+  }
+
+  @-webkit-keyframes load {
+    0% {
+      left: 0;
+      height: 30px;
+      width: 15px;
+    }
+    50% {
+      height: 8px;
+      width: 40px;
+    }
+    100% {
+      left: 235px;
+      height: 30px;
+      width: 15px;
+    }
+  }
+
+  @keyframes load {
+    0% {
+      left: 0;
+      height: 30px;
+      width: 15px;
+    }
+    50% {
+      height: 8px;
+      width: 40px;
+    }
+    100% {
+      left: 235px;
+      height: 30px;
+      width: 15px;
+    }
+  }
+
+  /********************************/
+</style>
