@@ -1,7 +1,8 @@
 const express = require("express");
+const request = require("request");
 const yuyin = require("./yuyin");
 const app = express();
-const port = 3000;
+const port = 9080;
 
 //设置跨域访问
 app.all("*", function (req, res, next) {
@@ -27,19 +28,52 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname+'/index.html')
+app.get("/yuyin/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/getYuyin", (req, res) => {
+let lock = false;
 
-  if (req.body.text) {
-    console.log(req.body.text)
-    yuyin.getYuyin(req.body.text,req.body.voice?req.body.voice:"Aixia",req.body.volume?req.body.volume:50,req.body.speech_rate?req.body.speech_rate:0).then((url) => {
-      res.send(url);
-    });
+app.get("/yuyin/get", (req, res) => {
+  if (!lock) {
+    lock = true;
+    if (req.body.text || req.query.text) {
+      let data = req.body.text?req.body:req.query
+      console.log(data)
+      yuyin
+        .getYuyin(
+          data.text,
+          data.voice ? data.voice : "Aixia",
+          data.volume ? data.volume : 50,
+          data.speech_rate ? data.speech_rate : 0
+        )
+        .then(
+          (url) => {
+            request
+              .get({
+                url: `https://www.zaixianai.cn${url}`,
+                gzip: true,
+                headers: {
+                  usertoken: "lolixxx",
+                  referer: "https://www.zaixianai.cn/voiceCompose",
+                },
+              })
+              .on("response", function (response) {
+                lock = false;
+                response.pipe(res);
+              });
+          },
+          (rej) => {
+            lock = false;
+            res.send(rej);
+          }
+        );
+    } else {
+      lock = false;
+      res.send("no text");
+    }
   } else {
-    res.send("no text");
+    res.send("wait");
   }
 });
 
