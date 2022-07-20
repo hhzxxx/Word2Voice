@@ -1,18 +1,21 @@
 let Nightmare = require("nightmare");
 
+
+
 function getYuyin(text, voice = "Aixia", volume = 50, speech_rate = 0) {
   const promise = new Promise(function (resolve, reject) {
     try {
       console.log("getYuyin", text);
       let nightmare = new Nightmare({
-        show: false,
-        openDevTools: {
-          show: false,
-          mode: "undocked", // 开发者工具位置：right, bottom, undocked, detach
-        },
-        waitTimeout: 10000,
-        executionTimeout: 10000,
+        show: true,
+        // openDevTools: {
+        //   show: false,
+        //   mode: "undocked", // 开发者工具位置：right, bottom, undocked, detach
+        // },
+        waitTimeout: 20000,
+        executionTimeout: 20000,
       });
+
       nightmare
         .goto("https://www.zaixianai.cn/voiceCompose")
         .wait(".bofan")
