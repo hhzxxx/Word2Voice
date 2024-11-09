@@ -13,20 +13,20 @@ let lastDealDate = ''
 		browserURL: 'http://192.168.2.120:19222',
 	})
 
-	// setInterval(async () => {
-	// 	const now = new Date()
-	// 	const year = now.getFullYear()
-	// 	const month = now.getMonth()
-	// 	const day = now.getDate()
-	// 	const hour = now.getHours()
-	// 	if (lastDealDate != `${year}-${month}-${day}-${hour}`) {
-	// 		console.log('dealdeal')
-	// 		await dealCoding(browser)
-	// 		await dealMayun(browser)
-	// 		// await dealGitCode(browser);
-	// 		lastDealDate = `${year}-${month}-${day}-${hour}`
-	// 	}
-	// }, 5000)
+	setInterval(async () => {
+		const now = new Date()
+		const year = now.getFullYear()
+		const month = now.getMonth()
+		const day = now.getDate()
+		const hour = now.getHours()
+		if (lastDealDate != `${year}-${month}-${day}-${hour}`) {
+			console.log('dealdeal')
+			await dealCoding(browser)
+			await dealMayun(browser)
+			// await dealGitCode(browser);
+			lastDealDate = `${year}-${month}-${day}-${hour}`
+		}
+	}, 5000)
 
 
 	// 创建 Express 应用
