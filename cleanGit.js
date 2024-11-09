@@ -16,21 +16,9 @@ let lastDealDate = '';
         const hour = now.getHours();
         if (lastDealDate != `${year}-${month}-${day}-${hour}`) {
             console.log('dealdeal')
-            try {
-                await dealCoding(browser);
-            } catch (e) {
-                console.error(e)
-            }
-            try {
-                await dealGitCode(browser);
-            } catch (e) {
-                console.error(e)
-            }
-            try {
-                await dealMayun(browser);
-            } catch (e) {
-                console.error(e)
-            }
+            await dealCoding(browser);
+            await dealMayun(browser);
+            // await dealGitCode(browser);
             lastDealDate = `${year}-${month}-${day}-${hour}`;
         }
         // console.log('end')

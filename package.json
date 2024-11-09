@@ -1,4 +1,7 @@
 {
+  "scripts": {
+		"dev":" pm2 start ./cleanGit.js --watch --restart-delay 1000"
+	},
   "dependencies": {
     "puppeteer": "^21.10.0"
   }
