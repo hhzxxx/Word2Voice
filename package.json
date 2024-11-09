@@ -1,8 +1,10 @@
 {
   "scripts": {
-		"dev":" pm2 start ./cleanGit.js --watch --restart-delay 1000"
-	},
+    "dev": " pm2 start ./cleanGit.js --watch --restart-delay 1000",
+    "start": "node ./cleanGit.js"
+  },
   "dependencies": {
+    "express": "^4.21.1",
     "puppeteer": "^21.10.0"
   }
 }
