@@ -51,7 +51,7 @@ let lastDealDate = ''
 	})
 
 	// 启动服务器，监听指定端口
-	app.listen(port, () => {
+	app.listen(port,'0.0.0.0', () => {
 		console.log(`Server is running at http://localhost:${port}`)
 	})
 
