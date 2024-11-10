@@ -4,6 +4,7 @@ async function getBtMp4Key(browser) {
 	// 打开页面
 	await page.goto('https://www.padmp4.com/', {
 		waitUntil: 'networkidle0',
+    timeout: 10000
 	})
 
 	// 定义一个 Promise，用于等待特定的请求
