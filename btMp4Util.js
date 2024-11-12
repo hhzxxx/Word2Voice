@@ -4,13 +4,13 @@ async function getBtMp4Key(browser) {
 	// 打开页面
 	await page.goto('https://www.padmp4.com/', {
 		waitUntil: 'networkidle0',
-    timeout: 10000
+		timeout: 10000,
 	})
 
 	// 定义一个 Promise，用于等待特定的请求
 	const requestPromise = new Promise((resolve) => {
 		page.once('request', (request) => {
-			if ( request.method() === 'POST') {
+			if (request.method() === 'POST') {
 				resolve(request)
 			}
 		})
@@ -33,34 +33,31 @@ async function getBtMp4Key(browser) {
 
 	await page.close()
 
-  if(request.postData() && request.postData().split('&t=')[1]){
-    return request.postData().split('&t=')[1]
-  }
-  return ""
+	if (request.postData() && request.postData().split('&t=')[1]) {
+		return request.postData().split('&t=')[1]
+	}
+	return ''
 }
 
-async function getBtMp4Doc(browser,url) {
+async function getBtMp4Doc(browser, url) {
 	const page = await browser.newPage()
 
 	// 打开页面
 	await page.goto(url, {
 		waitUntil: 'networkidle0',
-    timeout: 10000
+		timeout: 10000,
 	})
 
-  let doc = ""
-
-  await page.evaluate(() => {
-		doc = document.querySelector('html').innerHTML
-    console.log(doc)
+	const doc = await page.evaluate(() => {
+		return document.querySelector('html').innerHTML
 	})
 
-  await page.close()
+	await page.close()
 
-  return doc
+	return doc
 }
 
 module.exports = {
 	getBtMp4Key,
-  getBtMp4Doc
+	getBtMp4Doc,
 }
