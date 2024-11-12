@@ -9,9 +9,10 @@ const bodyParser = require('body-parser')
 
 let lastDealDate = ''
 ;(async () => {
-	const browser = await puppeteer.connect({
-		browserURL: 'http://192.168.2.120:19222',
-	})
+	// const browser = await puppeteer.connect({
+	// 	browserURL: 'http://192.168.2.120:19222',
+	// })
+  const browser = await puppeteer.launch();
 
 	setInterval(async () => {
 		const now = new Date()
