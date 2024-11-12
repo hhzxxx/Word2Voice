@@ -48,7 +48,15 @@ async function getBtMp4Doc(browser,url) {
     timeout: 10000
 	})
 
-  return document.querySelector('html').innerHTML
+  let doc = ""
+
+  await page.evaluate(() => {
+		doc = document.querySelector('html').innerHTML
+	})
+
+  await page.close()
+
+  return doc
 }
 
 module.exports = {
