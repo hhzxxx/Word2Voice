@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer')
 const { dealCoding } = require('./coding')
 const { dealGitCode } = require('./gitCode')
 const { dealMayun } = require('./mayun')
-const { getBtMp4Key } = require('./btMp4Util')
+const { getBtMp4Key,getBtMp4Doc } = require('./btMp4Util')
 const express = require('express')
 const bodyParser = require('body-parser')
 
@@ -46,8 +46,13 @@ let lastDealDate = ''
 
 	app.get('/getMp4Key', async (req, res) => {
     const key = await getBtMp4Key(browser)
-
 		res.send(key)
+	})
+
+  app.get('/getBtMp4Doc', async (req, res) => {
+    const url = req.query.url
+    const doc = await getBtMp4Doc(browser,url)
+		res.send(doc)
 	})
 
 	// 启动服务器，监听指定端口

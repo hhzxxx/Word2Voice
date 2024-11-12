@@ -39,6 +39,19 @@ async function getBtMp4Key(browser) {
   return ""
 }
 
+async function getBtMp4Doc(browser,url) {
+	const page = await browser.newPage()
+
+	// 打开页面
+	await page.goto(url, {
+		waitUntil: 'networkidle0',
+    timeout: 10000
+	})
+
+  return document.querySelector('html').innerHTML
+}
+
 module.exports = {
 	getBtMp4Key,
+  getBtMp4Doc
 }
