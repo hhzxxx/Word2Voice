@@ -52,6 +52,7 @@ async function getBtMp4Doc(browser,url) {
 
   await page.evaluate(() => {
 		doc = document.querySelector('html').innerHTML
+    console.log(doc)
 	})
 
   await page.close()
