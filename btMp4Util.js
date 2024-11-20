@@ -17,8 +17,8 @@ async function getBtMp4Key(browser, url,keyword) {
 	})
 
 	// 在页面中执行点击操作
-	await page.evaluate((keyword) => {
-    document.querySelector("#wd").value = keyword
+	await page.evaluate((keyword1) => {
+    document.querySelector("#wd").value = keyword1
 		const searchButton = document.querySelector('button[type="submit"]')
 		if (searchButton) {
 			searchButton.click()
