@@ -47,7 +47,8 @@ let lastDealDate = ''
 
 	app.get('/getMp4Key', async (req, res) => {
     const url = req.query.url
-    const key = await getBtMp4Key(browser,url)
+    const keyword = req.query.keyword
+    const key = await getBtMp4Key(browser,url,keyword)
 		res.send(key)
 	})
 

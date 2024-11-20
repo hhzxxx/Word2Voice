@@ -1,4 +1,4 @@
-async function getBtMp4Key(browser, url) {
+async function getBtMp4Key(browser, url,keyword) {
 	const page = await browser.newPage()
 
 	// 打开页面
@@ -18,6 +18,7 @@ async function getBtMp4Key(browser, url) {
 
 	// 在页面中执行点击操作
 	await page.evaluate(() => {
+    document.querySelector("#wd").value = keyword
 		const searchButton = document.querySelector('button[type="submit"]')
 		if (searchButton) {
 			searchButton.click()
@@ -31,12 +32,17 @@ async function getBtMp4Key(browser, url) {
 	console.log('Request URL:', request.url())
 	console.log('Request Post Data:', request.postData())
 
+
+  const doc = await page.evaluate(() => {
+		return document.querySelector('html').innerHTML
+	})
+
 	await page.close()
 
-	if (request.postData() && request.postData().split('&t=')[1]) {
-		return request.postData().split('&t=')[1]
-	}
-	return ''
+	// if (request.postData() && request.postData().split('&t=')[1]) {
+	// 	return request.postData().split('&t=')[1]
+	// }
+	return doc
 }
 
 async function getBtMp4Doc(browser, url) {
