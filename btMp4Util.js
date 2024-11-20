@@ -41,7 +41,7 @@ async function getBtMp4Key(browser, url, keyword) {
 
 	// 获取新页面的 HTML
 	const doc = await page.content()
-	console.log('New page HTML:', newPageHtml)
+	console.log('New page HTML:', doc)
 
 	await page.close()
 
