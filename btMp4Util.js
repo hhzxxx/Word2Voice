@@ -1,8 +1,8 @@
-async function getBtMp4Key(browser) {
+async function getBtMp4Key(browser, url) {
 	const page = await browser.newPage()
 
 	// 打开页面
-	await page.goto('https://www.padmp4.com/', {
+	await page.goto(url, {
 		waitUntil: 'networkidle0',
 		timeout: 10000,
 	})
