@@ -18,7 +18,7 @@ async function getBtMp4Key(browser, url, keyword) {
 
 	// 在页面中执行点击操作
 	await Promise.all([
-		page.waitForNavigation({ waitUntil: 'networkidle0' }), // 等待页面导航完成
+		page.waitForNavigation({ waitUntil: 'domcontentloaded' }), // 等待页面导航完成
 		page.evaluate((keyword1) => {
 			document.querySelector('#wd').value = keyword1
 			const searchButton = document.querySelector('button[type="submit"]')
