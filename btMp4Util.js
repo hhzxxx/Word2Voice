@@ -1,4 +1,4 @@
-async function getBtMp4Key(browser, url,keyword) {
+async function getBtMp4Key(browser, url, keyword) {
 	const page = await browser.newPage()
 
 	// 打开页面
@@ -8,34 +8,40 @@ async function getBtMp4Key(browser, url,keyword) {
 	})
 
 	// 定义一个 Promise，用于等待特定的请求
-	const requestPromise = new Promise((resolve) => {
-		page.once('request', (request) => {
-			if (request.method() === 'POST') {
-				resolve(request)
-			}
-		})
-	})
+	// const requestPromise = new Promise((resolve) => {
+	// 	page.once('request', (request) => {
+	// 		if (request.method() === 'POST') {
+	// 			resolve(request)
+	// 		}
+	// 	})
+	// })
 
 	// 在页面中执行点击操作
-	await page.evaluate((keyword1) => {
-    document.querySelector("#wd").value = keyword1
-		const searchButton = document.querySelector('button[type="submit"]')
-		if (searchButton) {
-			searchButton.click()
-		} else {
-			console.error('searchButton not found.')
-		}
-	},keyword)
+	await Promise.all([
+		page.waitForNavigation({ waitUntil: 'networkidle0' }), // 等待页面导航完成
+		page.evaluate((keyword1) => {
+			document.querySelector('#wd').value = keyword1
+			const searchButton = document.querySelector('button[type="submit"]')
+			if (searchButton) {
+				searchButton.click()
+			} else {
+				console.error('searchButton not found.')
+			}
+		}, keyword), // 将 keyword 作为参数传递给 page.evaluate
+	])
 
-	// 等待请求发起并获取请求内容
-	const request = await requestPromise
-	console.log('Request URL:', request.url())
-	console.log('Request Post Data:', request.postData())
+	// // 等待请求发起并获取请求内容
+	// const request = await requestPromise
+	// console.log('Request URL:', request.url())
+	// console.log('Request Post Data:', request.postData())
 
+	// const doc = await page.evaluate(() => {
+	// 	return document.querySelector('html').innerHTML
+	// })
 
-  const doc = await page.evaluate(() => {
-		return document.querySelector('html').innerHTML
-	})
+	// 获取新页面的 HTML
+	const doc = await page.content()
+	console.log('New page HTML:', newPageHtml)
 
 	await page.close()
 
