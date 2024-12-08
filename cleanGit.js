@@ -14,20 +14,20 @@ let lastDealDate = ''
 	})
   // const browser = await puppeteer.launch();
 
-	setInterval(async () => {
-		const now = new Date()
-		const year = now.getFullYear()
-		const month = now.getMonth()
-		const day = now.getDate()
-		const hour = now.getHours()
-		if (lastDealDate != `${year}-${month}-${day}-${hour}`) {
-			console.log('dealdeal')
-			await dealCoding(browser)
-			await dealMayun(browser)
-			// await dealGitCode(browser);
-			lastDealDate = `${year}-${month}-${day}-${hour}`
-		}
-	}, 10 * 60 * 1000)
+	// setInterval(async () => {
+	// 	const now = new Date()
+	// 	const year = now.getFullYear()
+	// 	const month = now.getMonth()
+	// 	const day = now.getDate()
+	// 	const hour = now.getHours()
+	// 	if (lastDealDate != `${year}-${month}-${day}-${hour}`) {
+	// 		console.log('dealdeal')
+	// 		await dealCoding(browser)
+	// 		await dealMayun(browser)
+	// 		// await dealGitCode(browser);
+	// 		lastDealDate = `${year}-${month}-${day}-${hour}`
+	// 	}
+	// }, 10 * 60 * 1000)
 
 
 	// 创建 Express 应用
@@ -63,21 +63,21 @@ let lastDealDate = ''
 		console.log(`Server is running at http://localhost:${port}`)
 	})
 
-	// while (true) {
-	//     // console.log('start')
-	//     const now = new Date();
-	//     const year = now.getFullYear();
-	//     const month = now.getMonth();
-	//     const day = now.getDate();
-	//     const hour = now.getHours();
-	//     if (lastDealDate != `${year}-${month}-${day}-${hour}`) {
-	//         console.log('dealdeal')
-	//         await dealCoding(browser);
-	//         await dealMayun(browser);
-	//         // await dealGitCode(browser);
-	//         lastDealDate = `${year}-${month}-${day}-${hour}`;
-	//     }
-	//     // console.log('end')
-	//     await new Promise(r => setTimeout(r, 5000));
-	// }
+	while (true) {
+	    // console.log('start')
+	    const now = new Date();
+	    const year = now.getFullYear();
+	    const month = now.getMonth();
+	    const day = now.getDate();
+	    const hour = now.getHours();
+	    if (lastDealDate != `${year}-${month}-${day}-${hour}`) {
+	        console.log('dealdeal')
+	        await dealCoding(browser);
+	        await dealMayun(browser);
+	        // await dealGitCode(browser);
+	        lastDealDate = `${year}-${month}-${day}-${hour}`;
+	    }
+	    // console.log('end')
+	    await new Promise(r => setTimeout(r, 5000));
+	}
 })()
