@@ -27,7 +27,7 @@ let lastDealDate = ''
 			// await dealGitCode(browser);
 			lastDealDate = `${year}-${month}-${day}-${hour}`
 		}
-	}, 10 * 60 * 1000)
+	}, 10 * 1000)
 
 
 	// 创建 Express 应用
