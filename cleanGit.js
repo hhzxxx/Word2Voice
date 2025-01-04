@@ -79,10 +79,10 @@ let lastLogin = 0
 	        // await dealGitCode(browser);
 	        lastDealDate = `${year}-${month}-${day}-${hour}`;
 	    }
-      if(Date.now() - lastLogin > 1000 * 60 * 10){
-        await autoLoginPoe2(browser);
-        lastLogin = Date.now();
-      }
+      // if(Date.now() - lastLogin > 1000 * 60 * 10){
+      //   await autoLoginPoe2(browser);
+      //   lastLogin = Date.now();
+      // }
 	    // console.log('end')
 	    await new Promise(r => setTimeout(r, 5000));
 	}
