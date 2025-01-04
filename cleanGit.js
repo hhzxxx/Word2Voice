@@ -2,12 +2,14 @@ const puppeteer = require('puppeteer')
 const { dealCoding } = require('./coding')
 const { dealGitCode } = require('./gitCode')
 const { dealMayun } = require('./mayun')
+const { autoLoginPoe2 } = require('./gjf')
 const { getBtMp4Key,getBtMp4Doc } = require('./btMp4Util')
 const express = require('express')
 const bodyParser = require('body-parser')
 
 
 let lastDealDate = ''
+let lastLogin = 0
 ;(async () => {
 	const browser = await puppeteer.connect({
 		browserURL: 'http://192.168.2.120:19222',
@@ -77,6 +79,10 @@ let lastDealDate = ''
 	        // await dealGitCode(browser);
 	        lastDealDate = `${year}-${month}-${day}-${hour}`;
 	    }
+      if(Date.now() - lastLogin > 1000 * 60 * 10){
+        await autoLoginPoe2(browser);
+        lastLogin = Date.now();
+      }
 	    // console.log('end')
 	    await new Promise(r => setTimeout(r, 5000));
 	}
